@@ -56,33 +56,34 @@ export default function ProfilePage({ route }) {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Button
-            mode="contained"
-            onPress={() => {
-              navigate.navigate("profile", { studentdata });
-            }}
-            style={styles.button}
-          >
-            ProfilePage
-          </Button>
-          <Button
-            mode="contained"
-            onPress={() => {
-              navigate.navigate("course");
-            }}
-            style={styles.button}
-          >
-            Course
-          </Button>
-          <Button
-            mode="contained"
-            onPress={() => {
-              navigate.navigate("subjects");
-            }}
-            style={styles.button}
-          >
-            Subjects
-          </Button>
+        <Button
+  mode="contained"
+  onPress={() => {
+    navigate.navigate("Profile", { studentdata });
+  }}
+  style={styles.button}
+>
+  ProfilePage
+</Button>
+<Button
+  mode="contained"
+  onPress={() => {
+    navigate.navigate("Course");
+  }}
+  style={styles.button}
+>
+  Course
+</Button>
+<Button
+  mode="contained"
+  onPress={() => {
+    navigate.navigate("Subject");
+  }}
+  style={styles.button}
+>
+  Subjects
+</Button>
+
         </View>
       </ScrollView>
     </PaperProvider>

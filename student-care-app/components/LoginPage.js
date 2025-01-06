@@ -16,17 +16,18 @@ export default function LoginPage() {
   const navigate = useNavigation();
 
   const handlebutton = () => {
-    // Checking for multiple students
     const student = students.find(
       (student) => student.username === name && student.password === password
     );
-
+  
     if (student) {
-      navigate.navigate("profile", { studentdata: student });
+      navigate.navigate("Profile", { studentdata: student });
     } else {
       alert("Invalid username or password.");
     }
   };
+  
+  
 
   return (
     <PaperProvider>
