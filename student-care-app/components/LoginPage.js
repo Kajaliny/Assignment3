@@ -1,70 +1,100 @@
-import React, { useState } from 'react';
-import { TextInput, Button, Text, StyleSheet, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, View } from "react-native";
+import {
+  Button,
+  Divider,
+  PaperProvider,
+  Text,
+  TextInput,
+} from "react-native-paper";
+import { students } from "../data/StudentDb";
+import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
-const loginCredentials = {
-  username: 'student123',
-  password: 'password123'
-};
+export default function LoginPage() {
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigation();
 
-const LoginPage = ({ navigation }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const handlebutton = () => {
+    // Checking for multiple students
+    const student = students.find(
+      (student) => student.username === name && student.password === password
+    );
 
-  const handleLogin = () => {
-    if (username === loginCredentials.username && password === loginCredentials.password) {
-      navigation.navigate('Profile');
+    if (student) {
+      navigate.navigate("profile", { studentdata: student });
     } else {
-      setErrorMessage('Incorrect username or password');
+      alert("Invalid username or password.");
     }
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Student Login</Text>
-      <TextInput 
-        style={styles.input} 
-        placeholder="Username" 
-        value={username}
-        onChangeText={setUsername} 
-      />
-      <TextInput 
-        style={styles.input} 
-        placeholder="Password" 
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword} 
-      />
-      {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
-      <Button title="Login" onPress={handleLogin} />
-    </View>
+    <PaperProvider>
+      <ScrollView>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>UoV Student Care</Text>
+        </View>
+        <View style={styles.imagecontain}>
+          <Image
+            source={require("../assets/uovlogo.png")}
+            style={styles.image}
+          />
+        </View>
+        <View style={styles.container}>
+          <Text style={styles.loginText}>Student Login</Text>
+          <Divider />
+        </View>
+
+        <View style={styles.formcontainer}>
+          <TextInput label="Username" mode="outlined" onChangeText={setName} />
+          <TextInput
+            label="Password"
+            mode="outlined"
+            secureTextEntry
+            onChangeText={setPassword}
+          />
+          <View style={styles.buttoncontainer}>
+            <Button mode="contained" onPress={handlebutton}>
+              Login
+            </Button>
+          </View>
+        </View>
+      </ScrollView>
+    </PaperProvider>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
+  container: { alignItems: "center" },
+  header: {
+    width: "100%",
+    height: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#8b008b",
   },
-  title: {
+  headerText: {
     fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
+    color: "#fff",
+    backgroundColor: "#8b008b",
+    fontWeight: "bold",
   },
-  input: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    marginBottom: 12,
-    paddingHorizontal: 8,
-    width: '80%',
+  image: {
+    width: "60%",
+    height: 100,
+    resizeMode: "contain",
+    marginTop: 5,
   },
-  error: {
-    color: 'red',
-    marginBottom: 10,
+  imagecontain: { alignItems: "center" },
+  loginText: {
+    fontSize: 40,
+    fontWeight: "bold",
+  },
+  formcontainer: {
+    paddingHorizontal: 20,
+    marginTop: 20,
+  },
+  buttoncontainer: {
+    paddingTop: 20,
   },
 });
-
-export default LoginPage;
